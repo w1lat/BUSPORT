@@ -1,0 +1,19 @@
+
+#IDEA files
+*.iml
+.idea/
+
+#maven
+target/
+
+#Java bin
+*.class
+*.project
+*.classpath
+
+#files
+
+*.log
+hsql/
+
+/src/main/java/vi/talii/RunApp.java
