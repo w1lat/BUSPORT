@@ -10,6 +10,8 @@ import java.time.LocalTime;
 /**
  * Created by vitalii on 03.04.17.
  */
+@Entity
+@Table(name = "tickets")
 public class Ticket extends GeneratedIdentifierEntity{
 
     @ManyToOne
@@ -17,7 +19,7 @@ public class Ticket extends GeneratedIdentifierEntity{
     private User owner;
     @Column(length = 2, nullable = false)
     private int place;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "bus_id", referencedColumnName = "id")
     private Bus bus;
     @Column(length = 10, nullable = false)

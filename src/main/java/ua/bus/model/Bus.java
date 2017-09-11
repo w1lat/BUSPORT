@@ -5,15 +5,12 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 
-/**
- * Created by vitalii on 03.04.17.
- */
+@Entity
 @Table(name = "buses")
 public class Bus extends GeneratedIdentifierEntity{
 
     @Column(length = 20, nullable = false)
     private String model;
-    @Column(length = 10)
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "driver_id", referencedColumnName = "id")
     private Driver driver;

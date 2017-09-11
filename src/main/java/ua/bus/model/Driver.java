@@ -9,6 +9,7 @@ import java.time.LocalDate;
 /**
  * Created by vitalii on 03.04.17.
  */
+@Entity
 @Table(name = "drivers")
 public class Driver extends GeneratedIdentifierEntity{
 
@@ -18,21 +19,21 @@ public class Driver extends GeneratedIdentifierEntity{
     private String surName;
     @Column(length = 25)
     private String lastName;
-    @Column(length = 10, nullable = false)
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "license_id", referencedColumnName = "id")
-    private DrivingLicense drivingLicense;
+//    @Column(length = 10, nullable = false)
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "license_id", referencedColumnName = "id")
+//    private DrivingLicense drivingLicense;
     @Column(length = 10, nullable = false)
     private LocalDate birthDay;
 
     public Driver() {
     }
 
-    public Driver(String name, String surName, String lastName, DrivingLicense drivingLicense, LocalDate birthDay) {
+    public Driver(String name, String surName, String lastName, LocalDate birthDay) {
         this.name = name;
         this.surName = surName;
         this.lastName = lastName;
-        this.drivingLicense = drivingLicense;
+//        this.drivingLicense = drivingLicense;
         this.birthDay = birthDay;
     }
 
@@ -70,13 +71,13 @@ public class Driver extends GeneratedIdentifierEntity{
         this.lastName = lastName;
     }
 
-    public DrivingLicense getDrivingLicense() {
-        return drivingLicense;
-    }
-
-    public void setDrivingLicense(DrivingLicense drivingLicense) {
-        this.drivingLicense = drivingLicense;
-    }
+//    public DrivingLicense getDrivingLicense() {
+//        return drivingLicense;
+//    }
+//
+//    public void setDrivingLicense(DrivingLicense drivingLicense) {
+//        this.drivingLicense = drivingLicense;
+//    }
 
     public LocalDate getBirthDay() {
         return birthDay;
