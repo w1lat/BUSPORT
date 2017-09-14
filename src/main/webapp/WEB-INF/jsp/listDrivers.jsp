@@ -17,6 +17,7 @@
 			<table class="table table-hover">
 	    		<thead>
 		      		<tr>
+						<th hidden>ID</th>
 				        <th>Firstname</th>
 				        <th>Lastname</th>
 						<th>Surname</th>
@@ -28,12 +29,13 @@
 	    		<tbody>
 				<c:forEach items="${drivers}" var="driver">
 					<tr>
+						<td hidden>${driver.id}</td>
 						<td>${driver.name}</td>
 						<td>${driver.lastName}</td>
 						<td>${driver.surName}</td>
 						<td>${driver.birthDay}</td>
-						<td><a href="<c:url value='/edit-user-${user.ssoId}' />" class="btn btn-success custom-width">edit</a></td>
-						<td><a href="<c:url value='/delete-user-${user.ssoId}' />" class="btn btn-danger custom-width">delete</a></td>
+						<td><a href="<c:url value='/edit-driver-${driver.id}' />" class="btn btn-success custom-width">edit</a></td>
+						<td><a href="<c:url value='/delete-driver-${driver.id}' />" class="btn btn-danger custom-width">delete</a></td>
 					</tr>
 				</c:forEach>
 	    		</tbody>

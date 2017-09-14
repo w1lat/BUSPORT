@@ -1,25 +1,25 @@
 package ua.bus.controllers;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ua.bus.dao.DriverRepository;
 import ua.bus.model.Driver;
 import ua.bus.service.HRService;
+import ua.bus.utils.exceptions.DriverNotFoundException;
 import ua.bus.utils.exceptions.DriverSaveException;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.List;
-import java.util.Locale;
 
 @Controller
 public class AddNewDriverController {
+
+    private static final Logger LOGGER = Logger.getLogger(AddNewDriverController.class);
 
     @Autowired
     private HRService hrService;
@@ -28,40 +28,83 @@ public class AddNewDriverController {
     private DriverRepository driverRepository;
 
     @RequestMapping(value = "/addDriver", method = RequestMethod.GET)
-    public String addDriver(ModelMap model) {
+    public String newDriver(ModelMap model) {
         Driver newDriver = new Driver();
         model.addAttribute("driver", newDriver);
         return "addDriver";
     }
 
-    @RequestMapping(value = { "/addDriver" }, method = RequestMethod.POST)
-    public String saveUser(@Valid Driver driver, ModelMap model) {
-		/*
-		 * Preferred way to achieve uniqueness of field [sso] should be implementing custom @Unique annotation
-		 * and applying it on field [sso] of Model class [User].
-		 *
-		 * Below mentioned peace of code [if block] is to demonstrate that you can fill custom errors outside the validation
-		 * framework as well while still using internationalized messages.
-		 *
-		 */
-        try {
-            driver.setBirthDay(LocalDate.of(1990, Month.FEBRUARY, 21));
-            hrService.addDriver(driver);
-        } catch (DriverSaveException e) {
-            e.printStackTrace();
+    @RequestMapping(value = {"/addDriver"}, method = RequestMethod.POST)
+    public String saveDriver(@Valid Driver driver, BindingResult result, ModelMap model) {
+
+        if (result.hasErrors()) {
+            return "addDriver";
         }
 
-        model.addAttribute("success", "Driver " + driver.getName() + " "+ driver.getLastName() + " registered successfully");
+        try {
+            hrService.addDriver(driver);
+        } catch (DriverSaveException e) {
+            LOGGER.error(e.getMessage());
+        }
+        model.addAttribute("success", "Driver " + driver.getName() + " " + driver.getLastName() + " registered successfully");
         //return "success";
         return "registrationsuccess";
     }
 
-    @RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
-    public String listUsers(ModelMap model) {
+    /**
+     * This method will provide the medium to update an existing driver.
+     */
+    @RequestMapping(value = {"/edit-driver-{id}"}, method = RequestMethod.GET)
+    public String editDriver(@PathVariable long id, ModelMap model) {
+        Driver driver = null;
+        try {
+            driver = hrService.getDriverById(id);
+        } catch (DriverNotFoundException e) {
+            LOGGER.error(e.getMessage());
+        }
+        model.addAttribute("driver", driver);
+        model.addAttribute("edit", true);
+        return "addDriver";
+    }
 
-        Iterable<Driver> drivers = driverRepository.findAll();
+    @RequestMapping(value = {"/edit-driver-{id}"}, method = RequestMethod.POST)
+    public String updateDriver(@Valid Driver driver, BindingResult result,
+                               ModelMap model, @PathVariable String id) {
+
+        if (result.hasErrors()) {
+            return "addDriver";
+        }
+        try {
+            hrService.updateDriver(driver);
+        } catch (DriverSaveException e) {
+            LOGGER.error(e.getMessage());
+        }
+
+        model.addAttribute("success", "Driver " + driver.getName() + " " + driver.getSurName() + " updated successfully");
+        return "registrationsuccess";
+    }
+
+    @RequestMapping(value = {"/list"}, method = RequestMethod.GET)
+    public String listDrivers(ModelMap model) {
+
+        Iterable<Driver> drivers = null;
+        try {
+            drivers = hrService.getAllDrivers();
+        } catch (DriverNotFoundException e) {
+            LOGGER.error(e.getMessage());
+        }
+
         model.addAttribute("drivers", drivers);
         return "listDrivers";
+    }
+
+    /**
+     * This method will delete driver by it's id value.
+     */
+    @RequestMapping(value = {"/delete-driver-{id}"}, method = RequestMethod.GET)
+    public String deleteDriver(@PathVariable long id) {
+        hrService.deleteDriver(id);
+        return "redirect:/list";
     }
 
 

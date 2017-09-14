@@ -29,12 +29,12 @@ public class Driver extends GeneratedIdentifierEntity{
     public Driver() {
     }
 
-    public Driver(String name, String surName, String lastName, LocalDate birthDay) {
+    public Driver(String name, String surName, String lastName, String birthDay) {
         this.name = name;
         this.surName = surName;
         this.lastName = lastName;
 //        this.drivingLicense = drivingLicense;
-        this.birthDay = birthDay;
+        this.birthDay = LocalDate.parse(birthDay);
     }
 
     @Override
@@ -79,8 +79,16 @@ public class Driver extends GeneratedIdentifierEntity{
 //        this.drivingLicense = drivingLicense;
 //    }
 
-    public LocalDate getBirthDay() {
-        return birthDay;
+    public String getBirthDay() {
+        if(this.birthDay == null){
+            return null;
+        }else {
+            return birthDay.toString();
+        }
+    }
+
+    public void setBirthDay(String birthDay) {
+        this.birthDay = LocalDate.parse(birthDay);
     }
 
     public void setBirthDay(LocalDate birthDay) {

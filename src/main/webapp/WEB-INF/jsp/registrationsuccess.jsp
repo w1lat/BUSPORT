@@ -16,7 +16,7 @@
 	</div>
 	
 	<span class="well floatRight">
-		Go to <a href="<c:url value='/list' />">Drivers List</a>
+		<a href="<c:url value='/list' />" class="btn btn-primary btn-md">Drivers List</a>
 	</span>
 </div>
 </body>
