@@ -8,24 +8,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import ua.bus.dao.DriverRepository;
 import ua.bus.model.Driver;
 import ua.bus.service.HRService;
-import ua.bus.utils.exceptions.DriverNotFoundException;
-import ua.bus.utils.exceptions.DriverSaveException;
+import ua.bus.utils.exceptions.EntityNotFoundException;
+import ua.bus.utils.exceptions.EntitySaveException;
 
 import javax.validation.Valid;
 
 @Controller
-public class AddNewDriverController {
+public class DriverController {
 
-    private static final Logger LOGGER = Logger.getLogger(AddNewDriverController.class);
+    private static final Logger LOGGER = Logger.getLogger(DriverController.class);
 
     @Autowired
     private HRService hrService;
-
-    @Autowired
-    private DriverRepository driverRepository;
 
     @RequestMapping(value = "/addDriver", method = RequestMethod.GET)
     public String newDriver(ModelMap model) {
@@ -43,7 +39,7 @@ public class AddNewDriverController {
 
         try {
             hrService.addDriver(driver);
-        } catch (DriverSaveException e) {
+        } catch (EntitySaveException e) {
             LOGGER.error(e.getMessage());
         }
         model.addAttribute("success", "Driver " + driver.getName() + " " + driver.getLastName() + " registered successfully");
@@ -59,7 +55,7 @@ public class AddNewDriverController {
         Driver driver = null;
         try {
             driver = hrService.getDriverById(id);
-        } catch (DriverNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             LOGGER.error(e.getMessage());
         }
         model.addAttribute("driver", driver);
@@ -76,7 +72,7 @@ public class AddNewDriverController {
         }
         try {
             hrService.updateDriver(driver);
-        } catch (DriverSaveException e) {
+        } catch (EntitySaveException e) {
             LOGGER.error(e.getMessage());
         }
 
@@ -84,13 +80,13 @@ public class AddNewDriverController {
         return "registrationsuccess";
     }
 
-    @RequestMapping(value = {"/list"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/allDrivers"}, method = RequestMethod.GET)
     public String listDrivers(ModelMap model) {
 
         Iterable<Driver> drivers = null;
         try {
             drivers = hrService.getAllDrivers();
-        } catch (DriverNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             LOGGER.error(e.getMessage());
         }
 
@@ -104,7 +100,7 @@ public class AddNewDriverController {
     @RequestMapping(value = {"/delete-driver-{id}"}, method = RequestMethod.GET)
     public String deleteDriver(@PathVariable long id) {
         hrService.deleteDriver(id);
-        return "redirect:/list";
+        return "redirect:/allDrivers";
     }
 
 

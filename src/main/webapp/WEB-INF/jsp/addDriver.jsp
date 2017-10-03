@@ -13,8 +13,8 @@
 
 <body>
 
-<div class="generic-container">
-    <div class="well lead">User Registration Form</div>
+<div class="generic-container" align="middle">
+    <div class="well lead">Adding driver Form</div>
     <form:form method="POST" modelAttribute="driver" class="form-horizontal">
         <form:input type="hidden" path="id" id="id"/>
 
@@ -85,11 +85,11 @@
                 <c:choose>
                     <c:when test="${edit}">
                         <input type="submit" value="Update" class="btn btn-primary btn-sm"/> or <a
-                            href="<c:url value='/list' />">Cancel</a>
+                            href="<c:url value='/allDrivers' />">Cancel</a>
                     </c:when>
                     <c:otherwise>
                         <input type="submit" value="Register" class="btn btn-primary btn-sm"/> or <a
-                            href="<c:url value='/list' />">Cancel</a>
+                            href="<c:url value='/allDrivers' />">Cancel</a>
                     </c:otherwise>
                 </c:choose>
             </div>

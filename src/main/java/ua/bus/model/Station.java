@@ -1,26 +1,22 @@
 package ua.bus.model;
 
-import org.hibernate.annotations.CollectionId;
-import ua.bus.model.utils.Coordinates;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-/**
- * Created by Vitalii on 02.09.2017.
- */
 @Entity
 @Table(name = "stations")
-public class Station extends GeneratedIdentifierEntity{
+public class Station extends GeneratedIdentifierEntity {
 
-    @Column(unique = true, length = 10, nullable = false)
+    @Column(length = 3, nullable = false)
     private String stationCode;
-    @Column(unique = true, length = 25, nullable = false)
+    @Column(length = 25, nullable = false)
     private String stationName;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "coordinates_id", referencedColumnName = "id")
-    private Coordinates coordinates;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "coordinates_id", referencedColumnName = "id")
+//    private Coordinates coordinates;
     @Column(length = 10, nullable = true)
     private LocalDate dateOfDeparture;
     @Column(length = 10, nullable = true)
@@ -29,6 +25,19 @@ public class Station extends GeneratedIdentifierEntity{
     private LocalTime timeOfDeparture;
     @Column(length = 10, nullable = true)
     private LocalTime timeOfArrival;
+
+    public Station() {
+    }
+
+    public Station(String stationCode, String stationName, String dateOfDeparture, String dateOfArrival, String timeOfDeparture, String timeOfArrival) {
+        this.stationCode = stationCode;
+        this.stationName = stationName;
+//        this.coordinates = coordinates;
+        this.dateOfDeparture = LocalDate.parse(dateOfDeparture);
+        this.dateOfArrival = LocalDate.parse(dateOfArrival);
+        this.timeOfDeparture = LocalTime.parse(timeOfDeparture);
+        this.timeOfArrival = LocalTime.parse(timeOfArrival);
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -39,7 +48,7 @@ public class Station extends GeneratedIdentifierEntity{
 
         if (stationCode != null ? !stationCode.equals(station.stationCode) : station.stationCode != null) return false;
         if (stationName != null ? !stationName.equals(station.stationName) : station.stationName != null) return false;
-        if (coordinates != null ? !coordinates.equals(station.coordinates) : station.coordinates != null) return false;
+//        if (coordinates != null ? !coordinates.equals(station.coordinates) : station.coordinates != null) return false;
         if (dateOfDeparture != null ? !dateOfDeparture.equals(station.dateOfDeparture) : station.dateOfDeparture != null)
             return false;
         if (dateOfArrival != null ? !dateOfArrival.equals(station.dateOfArrival) : station.dateOfArrival != null)
@@ -54,7 +63,7 @@ public class Station extends GeneratedIdentifierEntity{
     public int hashCode() {
         int result = stationCode != null ? stationCode.hashCode() : 0;
         result = 31 * result + (stationName != null ? stationName.hashCode() : 0);
-        result = 31 * result + (coordinates != null ? coordinates.hashCode() : 0);
+//        result = 31 * result + (coordinates != null ? coordinates.hashCode() : 0);
         result = 31 * result + (dateOfDeparture != null ? dateOfDeparture.hashCode() : 0);
         result = 31 * result + (dateOfArrival != null ? dateOfArrival.hashCode() : 0);
         result = 31 * result + (timeOfDeparture != null ? timeOfDeparture.hashCode() : 0);
@@ -79,44 +88,61 @@ public class Station extends GeneratedIdentifierEntity{
         this.stationName = stationName;
     }
 
-    public Coordinates getCoordinates() {
-        return coordinates;
+//    public Coordinates getCoordinates() {
+//        return coordinates;
+////    }
+//
+//    public void setCoordinates(Coordinates coordinates) {
+//        this.coordinates = coordinates;
+////    }
+
+    public String getDateOfDeparture() {
+
+        if (dateOfDeparture == null) {
+            return null;
+        } else {
+            return dateOfDeparture.toString();
+        }
     }
 
-    public void setCoordinates(Coordinates coordinates) {
-        this.coordinates = coordinates;
+    public void setDateOfDeparture(String dateOfDeparture) {
+        this.dateOfDeparture = LocalDate.parse(dateOfDeparture);
     }
 
-    public LocalDate getDateOfDeparture() {
-        return dateOfDeparture;
+    public String getDateOfArrival() {
+        if (dateOfArrival == null) {
+            return null;
+        } else {
+            return dateOfArrival.toString();
+        }
     }
 
-    public void setDateOfDeparture(LocalDate dateOfDeparture) {
-        this.dateOfDeparture = dateOfDeparture;
+    public void setDateOfArrival(String dateOfArrival) {
+        this.dateOfArrival = LocalDate.parse(dateOfArrival);
     }
 
-    public LocalDate getDateOfArrival() {
-        return dateOfArrival;
+    public String getTimeOfDeparture() {
+        if (timeOfDeparture == null) {
+            return null;
+        } else {
+            return timeOfDeparture.toString();
+        }
     }
 
-    public void setDateOfArrival(LocalDate dateOfArrival) {
-        this.dateOfArrival = dateOfArrival;
+    public void setTimeOfDeparture(String timeOfDeparture) {
+        this.timeOfDeparture = LocalTime.parse(timeOfDeparture);
     }
 
-    public LocalTime getTimeOfDeparture() {
-        return timeOfDeparture;
+    public String getTimeOfArrival() {
+        if (timeOfArrival == null) {
+            return null;
+        } else {
+            return timeOfArrival.toString();
+        }
     }
 
-    public void setTimeOfDeparture(LocalTime timeOfDeparture) {
-        this.timeOfDeparture = timeOfDeparture;
-    }
-
-    public LocalTime getTimeOfArrival() {
-        return timeOfArrival;
-    }
-
-    public void setTimeOfArrival(LocalTime timeOfArrival) {
-        this.timeOfArrival = timeOfArrival;
+    public void setTimeOfArrival(String timeOfArrival) {
+        this.timeOfArrival = LocalTime.parse(timeOfArrival);
     }
 }
 
