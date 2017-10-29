@@ -1,12 +1,12 @@
 package ua.bus.dao;
 
 import org.springframework.data.repository.CrudRepository;
+import ua.bus.model.Driver;
 import ua.bus.model.Route;
 
-import java.time.LocalDate;
-import java.util.Map;
+import java.util.List;
 
 public interface RouteRepository extends CrudRepository<Route, Long> {
 
-//    Map<String, Route> findByDateAndStation(LocalDate date, String stationName);
+    List<Route> findByDriver(Driver driver);
 }

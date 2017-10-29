@@ -11,25 +11,21 @@ public class Bus extends GeneratedIdentifierEntity{
 
     @Column(length = 20, nullable = false)
     private String model;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "driver_id", referencedColumnName = "id")
-    private Driver driver;
     @Column(length = 10, unique = true)
     private String registryNumber;
     @Column(length = 2, nullable = false)
     private int sitsCount;
     @Column(length = 4, precision = 4, scale = 2)
-    private float fuelConsumption;
+    private float fuelConsumptionPer100KM;
 
     public Bus() {
     }
 
-    public Bus(String model, Driver driver, String registryNumber, int sitsCount, float fuelConsumption) {
+    public Bus(String model, String registryNumber, int sitsCount, float fuelConsumption) {
         this.model = model;
-        this.driver = driver;
         this.registryNumber = registryNumber;
         this.sitsCount = sitsCount;
-        this.fuelConsumption = fuelConsumption;
+        this.fuelConsumptionPer100KM = fuelConsumption;
     }
 
     @Override
@@ -50,14 +46,6 @@ public class Bus extends GeneratedIdentifierEntity{
         this.model = model;
     }
 
-    public Driver getDriver() {
-        return driver;
-    }
-
-    public void setDriver(Driver driver) {
-        this.driver = driver;
-    }
-
     public String getRegistryNumber() {
         return registryNumber;
     }
@@ -74,11 +62,11 @@ public class Bus extends GeneratedIdentifierEntity{
         this.sitsCount = sitsCount;
     }
 
-    public float getFuelConsumption() {
-        return fuelConsumption;
+    public float getFuelConsumptionPer100KM() {
+        return fuelConsumptionPer100KM;
     }
 
-    public void setFuelConsumption(float fuelConsumption) {
-        this.fuelConsumption = fuelConsumption;
+    public void setFuelConsumptionPer100KM(float fuelConsumptionPer100KM) {
+        this.fuelConsumptionPer100KM = fuelConsumptionPer100KM;
     }
 }

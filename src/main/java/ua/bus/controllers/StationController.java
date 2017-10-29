@@ -42,6 +42,7 @@ public class StationController {
 
         try {
 //            station.setCoordinates(coordinates);
+            station.setRoutes(null);
             managerService.addStation(station);
         } catch (EntitySaveException e) {
             LOGGER.error(e.getMessage());

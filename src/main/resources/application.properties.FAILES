@@ -8,4 +8,4 @@ jdbc.password = root
 hibernate.dialect = org.hibernate.dialect.MySQLDialect
 hibernate.show_sql = true
 hibernate.format_sql = true
-hibernate.ddl-auto = update
+hibernate.ddl-auto = create

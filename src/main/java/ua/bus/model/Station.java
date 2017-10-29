@@ -2,9 +2,12 @@ package ua.bus.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "stations")
@@ -25,6 +28,8 @@ public class Station extends GeneratedIdentifierEntity {
     private LocalTime timeOfDeparture;
     @Column(length = 10, nullable = true)
     private LocalTime timeOfArrival;
+    @ManyToMany(mappedBy = "stations")
+    private List<Route> routes = new ArrayList<>();
 
     public Station() {
     }
@@ -143,6 +148,14 @@ public class Station extends GeneratedIdentifierEntity {
 
     public void setTimeOfArrival(String timeOfArrival) {
         this.timeOfArrival = LocalTime.parse(timeOfArrival);
+    }
+
+    public List<Route> getRoutes() {
+        return routes;
+    }
+
+    public void setRoutes(List<Route> routes) {
+        this.routes = routes;
     }
 }
 
