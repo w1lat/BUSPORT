@@ -14,10 +14,12 @@ public class Route extends GeneratedIdentifierEntity{
     private static int routeNumber;
     @Column(name = "route_code", nullable = false, unique = true)
     private String routeCode;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.PERSIST,
+            CascadeType.MERGE})
     @JoinColumn(name = "bus_id", referencedColumnName = "id")
     private Bus bus;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.PERSIST,
+            CascadeType.MERGE})
     @JoinColumn(name = "driver_id", referencedColumnName = "id")
     private Driver driver;
 

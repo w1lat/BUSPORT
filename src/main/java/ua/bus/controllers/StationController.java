@@ -68,7 +68,7 @@ public class StationController {
     }
 
     @RequestMapping(value = {"/edit-station-{id}"}, method = RequestMethod.POST)
-    public String updateDriver(@Valid Station station, BindingResult result,
+    public String updateRoute(@Valid Station station, BindingResult result,
                                ModelMap model, @PathVariable String id) {
 
         if (result.hasErrors()) {

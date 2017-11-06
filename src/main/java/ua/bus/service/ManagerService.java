@@ -135,7 +135,7 @@ public class ManagerService {
         Iterable buses = busRepository.findAll();
 
         if (buses == null) {
-            throw new EntityNotFoundException(0, Bus.class); //0 means all stations
+            throw new EntityNotFoundException(0, Bus.class); //0 means all busses
         } else {
             return buses;
         }
@@ -144,5 +144,43 @@ public class ManagerService {
     public void deleteBus(long id) {
         LOGGER.info("Starting bus delete");
         busRepository.delete(id);
+    }
+
+    public void deleteRoute(long id) {
+        LOGGER.info("Starting route delete");
+        routeRepository.delete(id);
+    }
+
+    public Iterable<Route> getAllRoutes() throws EntityNotFoundException {
+        LOGGER.info("Starting all routes getting");
+        Iterable routes = routeRepository.findAll();
+
+        if (routes == null) {
+            throw new EntityNotFoundException(0, Route.class); //0 means all routes
+        } else {
+            return routes;
+        }
+    }
+
+    public Route updateRoute(Route route) throws EntitySaveException {
+        LOGGER.info("Starting route update");
+        Route updatedRoute = routeRepository.save(route);
+
+        if (updatedRoute == null) {
+            throw new EntitySaveException(Route.class);
+        } else {
+            return updatedRoute;
+        }
+    }
+
+    public Route getRouteById(long id) throws EntityNotFoundException {
+        LOGGER.info("Starting route getting by id");
+        Route route = routeRepository.findOne(id);
+
+        if (route == null) {
+            throw new EntityNotFoundException(id, Route.class);
+        } else {
+            return route;
+        }
     }
 }
