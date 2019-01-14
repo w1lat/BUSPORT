@@ -23,12 +23,12 @@ public class Route extends GeneratedIdentifierEntity{
     @JoinColumn(name = "driver_id", referencedColumnName = "id")
     private Driver driver;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST,
-            CascadeType.MERGE})
-    @JoinTable(name = "route_stations",
-            joinColumns = @JoinColumn(name = "route_id"),
-            inverseJoinColumns = @JoinColumn(name = "station_id"))
-    private List<Station> stations = new ArrayList<>();
+//    @OneToMany(cascade = {CascadeType.PERSIST,
+//            CascadeType.MERGE})
+//    @JoinTable(name = "route_waypoints",
+//            joinColumns = @JoinColumn(name = "route_id"),
+//            inverseJoinColumns = @JoinColumn(name = "waypoint_id"))
+//    private List<WayPoint> wayPoints = new ArrayList<>();
 
     public String getRouteCode() {
         return routeCode;
@@ -54,30 +54,32 @@ public class Route extends GeneratedIdentifierEntity{
         this.driver = driver;
     }
 
-    public List<Station> getStations() {
-        return stations;
-    }
+//    public List<WayPoint> getWayPoints() {
+//        return wayPoints;
+//    }
 
-    public void setStations(List<Station> stations) {
-        this.stations = stations;
-    }
+//    public void setWayPoints(List<WayPoint> wayPoints) {
+//        this.wayPoints = wayPoints;
+//    }
 
     public String generateRouteCode() {
-        String departureStationCode = stations.get(0).getStationCode();
-        int countOfStations = stations.size();
-        int routeNumber = this.routeNumber++;
-        String arrivalStationCode = stations.get(countOfStations - 1).getStationCode();
-        this.setRouteCode(routeNumber + departureStationCode + countOfStations + arrivalStationCode);
-        return routeCode;
+//        String departureStationCode = wayPoints.get(0).getStation().getStationCode();
+//        int countOfStations = wayPoints.size();
+//        int routeNumber = this.routeNumber++;
+//        String arrivalStationCode = wayPoints.get(countOfStations - 1).getStation().getStationCode();
+//        this.setRouteCode(routeNumber + departureStationCode + countOfStations + arrivalStationCode);
+//        return routeCode;
+        this.setRouteCode("1");
+        return "1";
     }
 
     public Route() {
     }
 
-    public Route(Bus bus, Driver driver, List<Station> stations) {
+    public Route(Bus bus, Driver driver/*, List<WayPoint> wayPoints*/) {
         this.bus = bus;
         this.driver = driver;
-        this.stations = stations;
+//        this.wayPoints = wayPoints;
         generateRouteCode();
     }
 }

@@ -58,6 +58,8 @@ public class RouteController {
 
     @RequestMapping(value = "addRoute", method = RequestMethod.POST)
     public String saveRoute(@Valid Route route, BindingResult result, ModelMap model){
+        System.out.println("!!!!!!!!!!!!!!!!!!!!                                          " /*+
+                route.getWayPoints()*/);
         if(result.hasErrors()) {
             return "addRoute";
         }

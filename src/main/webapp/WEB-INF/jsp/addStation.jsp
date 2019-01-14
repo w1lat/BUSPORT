@@ -82,57 +82,57 @@
         <%--</div>--%>
     <%--</form:form>--%>
 
-        <div class="row">
-            <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="dateOfDeparture">Date of Departure</label>
+        <%--<div class="row">--%>
+            <%--<div class="form-group col-md-12">--%>
+                <%--<label class="col-md-3 control-lable" for="dateOfDeparture">Date of Departure</label>--%>
 
-                <div class="col-md-7">
-                    <form:input type="date" path="dateOfDeparture" id="dateOfDeparture" class="form-control input-sm"/>
-                    <div class="has-error">
-                        <form:errors path="dateOfDeparture" class="help-inline"/>
-                    </div>
-                </div>
-            </div>
-        </div>
+                <%--<div class="col-md-7">--%>
+                    <%--<form:input type="date" path="dateOfDeparture" id="dateOfDeparture" class="form-control input-sm"/>--%>
+                    <%--<div class="has-error">--%>
+                        <%--<form:errors path="dateOfDeparture" class="help-inline"/>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+            <%--</div>--%>
+        <%--</div>--%>
 
-        <div class="row">
-            <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="dateOfArrival">Date of Arrival</label>
+        <%--<div class="row">--%>
+            <%--<div class="form-group col-md-12">--%>
+                <%--<label class="col-md-3 control-lable" for="dateOfArrival">Date of Arrival</label>--%>
 
-                <div class="col-md-7">
-                    <form:input type="date" path="dateOfArrival" id="dateOfArrival" class="form-control input-sm"/>
-                    <div class="has-error">
-                        <form:errors path="dateOfArrival" class="help-inline"/>
-                    </div>
-                </div>
-            </div>
-        </div>
+                <%--<div class="col-md-7">--%>
+                    <%--<form:input type="date" path="dateOfArrival" id="dateOfArrival" class="form-control input-sm"/>--%>
+                    <%--<div class="has-error">--%>
+                        <%--<form:errors path="dateOfArrival" class="help-inline"/>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+            <%--</div>--%>
+        <%--</div>--%>
 
-        <div class="row">
-            <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="timeOfDeparture">Time of Departure</label>
+        <%--<div class="row">--%>
+            <%--<div class="form-group col-md-12">--%>
+                <%--<label class="col-md-3 control-lable" for="timeOfDeparture">Time of Departure</label>--%>
 
-                <div class="col-md-7">
-                    <form:input type="time" path="timeOfDeparture" id="timeOfDeparture" class="form-control input-sm"/>
-                    <div class="has-error">
-                        <form:errors path="timeOfDeparture" class="help-inline"/>
-                    </div>
-                </div>
-            </div>
-        </div>
+                <%--<div class="col-md-7">--%>
+                    <%--<form:input type="time" path="timeOfDeparture" id="timeOfDeparture" class="form-control input-sm"/>--%>
+                    <%--<div class="has-error">--%>
+                        <%--<form:errors path="timeOfDeparture" class="help-inline"/>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+            <%--</div>--%>
+        <%--</div>--%>
 
-        <div class="row">
-            <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="timeOfArrival">Time of Arrival</label>
+        <%--<div class="row">--%>
+            <%--<div class="form-group col-md-12">--%>
+                <%--<label class="col-md-3 control-lable" for="timeOfArrival">Time of Arrival</label>--%>
 
-                <div class="col-md-7">
-                    <form:input type="time" path="timeOfArrival" id="timeOfArrival" class="form-control input-sm"/>
-                    <div class="has-error">
-                        <form:errors path="timeOfArrival" class="help-inline"/>
-                    </div>
-                </div>
-            </div>
-        </div>
+                <%--<div class="col-md-7">--%>
+                    <%--<form:input type="time" path="timeOfArrival" id="timeOfArrival" class="form-control input-sm"/>--%>
+                    <%--<div class="has-error">--%>
+                        <%--<form:errors path="timeOfArrival" class="help-inline"/>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+            <%--</div>--%>
+        <%--</div>--%>
 
         <div class="row">
             <div class="form-actions floatRight">
@@ -149,6 +149,12 @@
             </div>
         </div>
     </form:form>
+    <span class="well center">
+        <a href="<c:url value='/allDrivers' />" class="btn btn-primary btn-md">Drivers List</a>
+        <a href="<c:url value='/allStations' />" class="btn btn-primary btn-md">Stations List</a>
+        <a href="<c:url value='/allRoutes' />" class="btn btn-primary btn-md">Routes List</a>
+        <a href="<c:url value='/allBuses' />" class="btn btn-primary btn-md">Buses List</a>
+    </span>
 </div>
 </body>
 </html>

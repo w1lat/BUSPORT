@@ -20,16 +20,8 @@ public class Station extends GeneratedIdentifierEntity {
 //    @OneToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "coordinates_id", referencedColumnName = "id")
 //    private Coordinates coordinates;
-    @Column(length = 10, nullable = true)
-    private LocalDate dateOfDeparture;
-    @Column(length = 10, nullable = true)
-    private LocalDate dateOfArrival;
-    @Column(length = 10, nullable = true)
-    private LocalTime timeOfDeparture;
-    @Column(length = 10, nullable = true)
-    private LocalTime timeOfArrival;
-    @ManyToMany(mappedBy = "stations")
-    private List<Route> routes = new ArrayList<>();
+//    @ManyToMany(mappedBy = "stations")
+//    private List<Route> routes = new ArrayList<>();
 
     public Station() {
     }
@@ -38,10 +30,6 @@ public class Station extends GeneratedIdentifierEntity {
         this.stationCode = stationCode;
         this.stationName = stationName;
 //        this.coordinates = coordinates;
-        this.dateOfDeparture = LocalDate.parse(dateOfDeparture);
-        this.dateOfArrival = LocalDate.parse(dateOfArrival);
-        this.timeOfDeparture = LocalTime.parse(timeOfDeparture);
-        this.timeOfArrival = LocalTime.parse(timeOfArrival);
     }
 
     @Override
@@ -51,16 +39,8 @@ public class Station extends GeneratedIdentifierEntity {
 
         Station station = (Station) o;
 
-        if (stationCode != null ? !stationCode.equals(station.stationCode) : station.stationCode != null) return false;
-        if (stationName != null ? !stationName.equals(station.stationName) : station.stationName != null) return false;
-//        if (coordinates != null ? !coordinates.equals(station.coordinates) : station.coordinates != null) return false;
-        if (dateOfDeparture != null ? !dateOfDeparture.equals(station.dateOfDeparture) : station.dateOfDeparture != null)
-            return false;
-        if (dateOfArrival != null ? !dateOfArrival.equals(station.dateOfArrival) : station.dateOfArrival != null)
-            return false;
-        if (timeOfDeparture != null ? !timeOfDeparture.equals(station.timeOfDeparture) : station.timeOfDeparture != null)
-            return false;
-        return !(timeOfArrival != null ? !timeOfArrival.equals(station.timeOfArrival) : station.timeOfArrival != null);
+        if (!stationCode.equals(station.stationCode)) return false;
+        return stationName.equals(station.stationName);
 
     }
 
@@ -69,10 +49,6 @@ public class Station extends GeneratedIdentifierEntity {
         int result = stationCode != null ? stationCode.hashCode() : 0;
         result = 31 * result + (stationName != null ? stationName.hashCode() : 0);
 //        result = 31 * result + (coordinates != null ? coordinates.hashCode() : 0);
-        result = 31 * result + (dateOfDeparture != null ? dateOfDeparture.hashCode() : 0);
-        result = 31 * result + (dateOfArrival != null ? dateOfArrival.hashCode() : 0);
-        result = 31 * result + (timeOfDeparture != null ? timeOfDeparture.hashCode() : 0);
-        result = 31 * result + (timeOfArrival != null ? timeOfArrival.hashCode() : 0);
         return result;
     }
 
@@ -100,62 +76,13 @@ public class Station extends GeneratedIdentifierEntity {
 //    public void setCoordinates(Coordinates coordinates) {
 //        this.coordinates = coordinates;
 ////    }
-
-    public String getDateOfDeparture() {
-
-        if (dateOfDeparture == null) {
-            return null;
-        } else {
-            return dateOfDeparture.toString();
-        }
-    }
-
-    public void setDateOfDeparture(String dateOfDeparture) {
-        this.dateOfDeparture = LocalDate.parse(dateOfDeparture);
-    }
-
-    public String getDateOfArrival() {
-        if (dateOfArrival == null) {
-            return null;
-        } else {
-            return dateOfArrival.toString();
-        }
-    }
-
-    public void setDateOfArrival(String dateOfArrival) {
-        this.dateOfArrival = LocalDate.parse(dateOfArrival);
-    }
-
-    public String getTimeOfDeparture() {
-        if (timeOfDeparture == null) {
-            return null;
-        } else {
-            return timeOfDeparture.toString();
-        }
-    }
-
-    public void setTimeOfDeparture(String timeOfDeparture) {
-        this.timeOfDeparture = LocalTime.parse(timeOfDeparture);
-    }
-
-    public String getTimeOfArrival() {
-        if (timeOfArrival == null) {
-            return null;
-        } else {
-            return timeOfArrival.toString();
-        }
-    }
-
-    public void setTimeOfArrival(String timeOfArrival) {
-        this.timeOfArrival = LocalTime.parse(timeOfArrival);
-    }
-
-    public List<Route> getRoutes() {
-        return routes;
-    }
-
-    public void setRoutes(List<Route> routes) {
-        this.routes = routes;
-    }
+//
+//    public List<Route> getRoutes() {
+//        return routes;
+//    }
+//
+//    public void setRoutes(List<Route> routes) {
+//        this.routes = routes;
+//    }
 }
 

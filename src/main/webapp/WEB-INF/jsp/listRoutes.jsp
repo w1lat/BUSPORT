@@ -35,8 +35,8 @@
                     <td>${route.routeCode}</td>
                     <td>${route.bus.registryNumber}</td>
                     <td>${route.driver.surName} ${route.driver.name} ${route.driver.lastName}</td>
-                    <td>${route.stations[0].stationName}</td>
-                    <td>${route.stations[fn:length(route.stations)-1].stationName}</td>
+                    <%--<td>${route.stations[0].stationName}</td>--%>
+                    <%--<td>${route.stations[fn:length(route.stations)-1].stationName}</td>--%>
                     <td><a href="<c:url value='/edit-route-${route.id}' />" class="btn btn-success custom-width">edit</a>
                     </td>
                     <td><a href="<c:url value='/delete-route-${route.id}' />" class="btn btn-danger custom-width">delete</a>
@@ -48,6 +48,12 @@
     </div>
     <div class="well">
         <a href="<c:url value='/addRoute' />">Add New Route</a>
+    </div>
+    <div class="well floatCenter">
+        <a href="<c:url value='/allDrivers' />" class="btn btn-primary btn-md">Drivers List</a>
+        <a href="<c:url value='/allStations' />" class="btn btn-primary btn-md">Stations List</a>
+        <a href="<c:url value='/allRoutes' />" class="btn btn-primary btn-md">Routes List</a>
+        <a href="<c:url value='/allBuses' />" class="btn btn-primary btn-md">Buses List</a>
     </div>
 </div>
 </body>

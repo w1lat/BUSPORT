@@ -19,6 +19,7 @@
 		<a href="<c:url value='/allDrivers' />" class="btn btn-primary btn-md">Drivers List</a>
 		<a href="<c:url value='/allStations' />" class="btn btn-primary btn-md">Stations List</a>
 		<a href="<c:url value='/allRoutes' />" class="btn btn-primary btn-md">Routes List</a>
+		<a href="<c:url value='/allBuses' />" class="btn btn-primary btn-md">Buses List</a>
 	</span>
 </div>
 </body>

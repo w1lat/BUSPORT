@@ -20,10 +20,6 @@
                 <th hidden>ID</th>
                 <th>Station Code</th>
                 <th>Station</th>
-                <th>Date of Departure</th>
-                <th>Date of Arrival</th>
-                <th>Time of Departure</th>
-                <th>Time of Arrival</th>
                 <th width="100"></th>
                 <th width="100"></th>
             </tr>
@@ -34,10 +30,6 @@
                     <td hidden>${station.id}</td>
                     <td>${station.stationCode}</td>
                     <td>${station.stationName}</td>
-                    <td data-type="date">${station.dateOfDeparture}</td>
-                    <td data-type="date">${station.dateOfArrival}</td>
-                    <td>${station.timeOfDeparture}</td>
-                    <td>${station.timeOfArrival}</td>
                     <td><a href="<c:url value='/edit-station-${station.id}' />" class="btn btn-success custom-width">edit</a>
                     </td>
                     <td><a href="<c:url value='/delete-station-${station.id}' />" class="btn btn-danger custom-width">delete</a>
@@ -50,6 +42,12 @@
     <div class="well">
         <a href="<c:url value='/addStation' />">Add New Station</a>
     </div>
+    <span class="well floatCenter">
+        <a href="<c:url value='/allDrivers' />" class="btn btn-primary btn-md">Drivers List</a>
+        <a href="<c:url value='/allStations' />" class="btn btn-primary btn-md">Stations List</a>
+        <a href="<c:url value='/allRoutes' />" class="btn btn-primary btn-md">Routes List</a>
+        <a href="<c:url value='/allBuses' />" class="btn btn-primary btn-md">Buses List</a>
+    </span>
 </div>
 </body>
 </html>

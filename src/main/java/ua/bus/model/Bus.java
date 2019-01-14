@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "buses")
 public class Bus extends GeneratedIdentifierEntity{
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 50, nullable = false)
     private String model;
     @Column(length = 10, unique = true)
     private String registryNumber;
