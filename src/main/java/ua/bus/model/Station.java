@@ -20,13 +20,11 @@ public class Station extends GeneratedIdentifierEntity {
 //    @OneToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "coordinates_id", referencedColumnName = "id")
 //    private Coordinates coordinates;
-//    @ManyToMany(mappedBy = "stations")
-//    private List<Route> routes = new ArrayList<>();
 
     public Station() {
     }
 
-    public Station(String stationCode, String stationName, String dateOfDeparture, String dateOfArrival, String timeOfDeparture, String timeOfArrival) {
+    public Station(String stationCode, String stationName) {
         this.stationCode = stationCode;
         this.stationName = stationName;
 //        this.coordinates = coordinates;
