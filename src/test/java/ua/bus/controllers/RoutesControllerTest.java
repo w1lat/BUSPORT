@@ -27,12 +27,12 @@ public class RoutesControllerTest extends InitAppContextTestBase{
         Route route = new Route();
         route.setBus(bus);
         route.setDriver(driver);
-        route.setWayPoints(wayPoints);
+//        route.setWayPoints(wayPoints);
         route.generateRouteCode();
 
         LOGGER.info(route.getBus());
         LOGGER.info(route.getDriver());
-        LOGGER.info(route.getWayPoints());
+//        LOGGER.info(route.getWayPoints());
         LOGGER.info(route.getRouteCode());
         LOGGER.info(route.getId());
 

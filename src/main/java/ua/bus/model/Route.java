@@ -77,10 +77,10 @@ public class Route extends GeneratedIdentifierEntity{
     public Route() {
     }
 
-    public Route(Bus bus, Driver driver, List<WayPoint> wayPoints) {
+    public Route(Bus bus, Driver driver/*, List<WayPoint> wayPoints*/) {
         this.bus = bus;
         this.driver = driver;
-        this.wayPoints = wayPoints;
+        /*this.wayPoints = wayPoints;*/
         generateRouteCode();
     }
 }
