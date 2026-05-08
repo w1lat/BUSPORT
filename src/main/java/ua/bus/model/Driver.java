@@ -27,6 +27,7 @@ public class Driver extends GeneratedIdentifierEntity{
 //    private DrivingLicense drivingLicense;
     @Column(length = 10, nullable = false)
     private LocalDate birthDay;
+    private int expirience;
 
     public Driver() {
     }
