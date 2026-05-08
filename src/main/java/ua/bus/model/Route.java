@@ -25,10 +25,13 @@ public class Route extends GeneratedIdentifierEntity{
 
 //    @OneToMany(cascade = {CascadeType.PERSIST,
 //            CascadeType.MERGE})
+    @OneToMany(mappedBy = "route",
+            cascade = {CascadeType.ALL},
+            fetch = FetchType.LAZY)
 //    @JoinTable(name = "route_waypoints",
 //            joinColumns = @JoinColumn(name = "route_id"),
 //            inverseJoinColumns = @JoinColumn(name = "waypoint_id"))
-//    private List<WayPoint> wayPoints = new ArrayList<>();
+    private List<WayPoint> wayPoints = new ArrayList<>();
 
     public String getRouteCode() {
         return routeCode;
@@ -54,23 +57,21 @@ public class Route extends GeneratedIdentifierEntity{
         this.driver = driver;
     }
 
-//    public List<WayPoint> getWayPoints() {
-//        return wayPoints;
-//    }
+    public List<WayPoint> getWayPoints() {
+        return wayPoints;
+    }
 
-//    public void setWayPoints(List<WayPoint> wayPoints) {
-//        this.wayPoints = wayPoints;
-//    }
+    public void setWayPoints(List<WayPoint> wayPoints) {
+        this.wayPoints = wayPoints;
+    }
 
     public String generateRouteCode() {
-//        String departureStationCode = wayPoints.get(0).getStation().getStationCode();
-//        int countOfStations = wayPoints.size();
-//        int routeNumber = this.routeNumber++;
-//        String arrivalStationCode = wayPoints.get(countOfStations - 1).getStation().getStationCode();
-//        this.setRouteCode(routeNumber + departureStationCode + countOfStations + arrivalStationCode);
-//        return routeCode;
-        this.setRouteCode("1");
-        return "1";
+        String departureStationCode = wayPoints.get(0).getStation().getStationCode();
+        int countOfStations = wayPoints.size();
+        int routeNumber = this.routeNumber++;
+        String arrivalStationCode = wayPoints.get(countOfStations - 1).getStation().getStationCode();
+        this.setRouteCode(routeNumber + departureStationCode + countOfStations + arrivalStationCode);
+        return routeCode;
     }
 
     public Route() {
@@ -79,7 +80,7 @@ public class Route extends GeneratedIdentifierEntity{
     public Route(Bus bus, Driver driver/*, List<WayPoint> wayPoints*/) {
         this.bus = bus;
         this.driver = driver;
-//        this.wayPoints = wayPoints;
+        /*this.wayPoints = wayPoints;*/
         generateRouteCode();
     }
 }

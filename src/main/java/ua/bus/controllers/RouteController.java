@@ -8,10 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import ua.bus.model.Bus;
-import ua.bus.model.Driver;
-import ua.bus.model.Route;
-import ua.bus.model.Station;
+import org.springframework.web.bind.annotation.RequestParam;
+import ua.bus.model.*;
 import ua.bus.service.HRService;
 import ua.bus.service.ManagerService;
 import ua.bus.utils.exceptions.EntityNotFoundException;
@@ -56,17 +54,22 @@ public class RouteController {
         return "addRoute";
     }
 
-    @RequestMapping(value = "addRoute", method = RequestMethod.POST)
-    public String saveRoute(@Valid Route route, BindingResult result, ModelMap model){
-        System.out.println("!!!!!!!!!!!!!!!!!!!!                                          " /*+
-                route.getWayPoints()*/);
+    @RequestMapping(value = "/addRoute", method = RequestMethod.POST)
+    public String saveRoute(@Valid Route route, @RequestParam("wayPoints") WayPoint[] wayPoints, BindingResult result, ModelMap model){
+        System.out.println("Start route adding");
+        for(WayPoint point : wayPoints){
+            System.out.println(point);
+        }
+        System.out.println();
         if(result.hasErrors()) {
+            System.out.println(result.getAllErrors());
             return "addRoute";
         }
         try{
             route.generateRouteCode();
-
+            System.out.println("Route code" + route.getRouteCode());
             managerService.addRoute(route);
+            System.out.println("End route adding");
         } catch (EntitySaveException e) {
             e.printStackTrace();
         }

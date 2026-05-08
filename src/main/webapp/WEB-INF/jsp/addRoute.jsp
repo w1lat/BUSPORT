@@ -79,34 +79,34 @@
             </div>
         </div>
 
-        <%--<div class="row">--%>
-            <%--<div class="form-group col-md-12">--%>
-                <%--<label class="col-md-3 control-lable" for="arrival_station">Choose station of arrival</label>--%>
+        <div class="col-md-7">
+            <div class="form-group col-md-12">
+                <label class="col-md-3 control-lable" for="arrival_station">Choose station of arriving</label>
 
-                <%--<div class="col-md-7">--%>
-                    <%--<select name="wayPoints" id="arrival_station">--%>
-                        <%--<c:forEach items="${stationList}" var="station">--%>
-                            <%--&lt;%&ndash;<option value="${station.id}"><c:out value="${station.stationCode} ${station.stationName}"/></option>&ndash;%&gt;--%>
-                            <%--<option value="${station}" ${station.id == route.wayPoints[0].id ? 'selected="selected"' : ''}>${station.stationCode} ${station.stationName}</option>--%>
-                        <%--</c:forEach>--%>
-                    <%--</select>--%>
-                <%--</div>--%>
-            <%--</div>--%>
-        <%--</div>--%>
-        <%--<div class="col-md-7">--%>
-            <%--<div class="form-group col-md-12">--%>
-                <%--<label class="col-md-3 control-lable" for="departure_station">Choose station of departure</label>--%>
+                <div class="col-md-7">
+                    <select name="wayPoints" id="arrival_station">
+                        <c:forEach items="${stationList}" var="station1">
+                            <%--<option value="${station.id}"><c:out value="${station.stationCode} ${station.stationName}"/></option>--%>
+                            <option value="${station1}" ${station1.id == route.wayPoints[fn:length(route.wayPoints)-1].id ? 'selected="selected"' : ''}>${station1.stationCode} ${station1.stationName}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="form-group col-md-12">
+                <label class="col-md-3 control-lable" for="departure_station">Choose station of departure</label>
 
-                <%--<div class="col-md-7">--%>
-                    <%--<select name="wayPoints" id="departure_station">--%>
-                        <%--<c:forEach items="${stationList}" var="station">--%>
-                            <%--&lt;%&ndash;<option value="${station.id}"><c:out value="${station.stationCode} ${station.stationName}"/></option>&ndash;%&gt;--%>
-                            <%--<option value="${station}" ${station.id == route.wayPoints[fn:length(route.wayPoints)-1].id ? 'selected="selected"' : ''}>${station.stationCode} ${station.stationName}</option>--%>
-                        <%--</c:forEach>--%>
-                    <%--</select>--%>
-                <%--</div>--%>
-            <%--</div>--%>
-        <%--</div>--%>
+                <div class="col-md-7">
+                    <select name="wayPoints" id="departure_station">
+                        <c:forEach items="${stationList}" var="station2">
+                            <%--<option value="${station.id}"><c:out value="${station.stationCode} ${station.stationName}"/></option>--%>
+                            <option value="${station2}" ${station2.id == route.wayPoints[fn:length(route.wayPoints)-1].id ? 'selected="selected"' : ''}>${station2.stationCode} ${station2.stationName}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="form-actions floatRight">
                 <c:choose>
