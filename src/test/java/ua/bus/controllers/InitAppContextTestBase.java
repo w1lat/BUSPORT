@@ -1,21 +1,21 @@
 package ua.bus.controllers;
 
-import org.junit.Before;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import ua.bus.dao.RouteRepository;
 import ua.bus.dao.StationRepository;
 import ua.bus.model.Bus;
 import ua.bus.model.Driver;
 import ua.bus.model.Station;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Arrays;
 
-import static org.mockito.Mockito.when;
-
-@RunWith(MockitoJUnitRunner.class)
+//@ExtendWith(SpringExtension.class)
+@AutoConfigureMockMvc
+@SpringBootTest
 public class InitAppContextTestBase {
 
     @Mock
@@ -28,10 +28,10 @@ public class InitAppContextTestBase {
     protected Station station1;
     protected Station station2;
 
-    @Before
-    public  void setUpMocks(){
-        bus = new Bus("bogdan", "BX3125AC", 40, 20.6F);
-        driver = new Driver("Vasyl", "Petrenko", "Olehovych", LocalDate.of(1970, 12, 22).toString());
+    @BeforeEach
+    public void setUpMocks() {
+        bus = new Bus("bogdan", "BX3125AC", 40, new BigDecimal(20.6));
+        driver = Driver.builder().name("Vasyl").surName("Petrenko").lastName("Olehovych").birthDay(LocalDate.of(1970, 12, 22)).build();
         station1 = new Station("km1", "Khmelnytskyi Center");
         station2 = new Station("kv1", "Kyiv Central Railway");
 
@@ -50,7 +50,6 @@ public class InitAppContextTestBase {
 //        deckService = new DeckService();
 //
 //        gameManager = new GameManager(playerService,deckService);
-
 
 
     }

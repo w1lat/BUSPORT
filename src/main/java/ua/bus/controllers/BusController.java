@@ -1,10 +1,12 @@
 package ua.bus.controllers;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,25 +15,25 @@ import ua.bus.service.ManagerService;
 import ua.bus.utils.exceptions.EntityNotFoundException;
 import ua.bus.utils.exceptions.EntitySaveException;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 @Controller
 public class BusController {
 
-    private static final Logger LOGGER = Logger.getLogger(BusController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BusController.class);
 
     @Autowired
     private ManagerService managerService;
 
     @RequestMapping(value = "/addBus", method = RequestMethod.GET)
     public String newBus(ModelMap model) {
-        Bus newBus = new Bus();
+        Bus newBus = Bus.builder().build();
         model.addAttribute("bus", newBus);
         return "addBus";
     }
 
     @RequestMapping(value = {"/addBus"}, method = RequestMethod.POST)
-    public String saveBus(@Valid Bus bus, BindingResult result, ModelMap model) {
+    public String saveBus(@ModelAttribute("bus") @Valid Bus bus, BindingResult result, ModelMap model) {
 
         if (result.hasErrors()) {
             return "addBus";
@@ -43,7 +45,6 @@ public class BusController {
             LOGGER.error(e.getMessage());
         }
         model.addAttribute("success", "Bus " + bus.getModel() + " " + bus.getRegistryNumber() + " added successfully");
-        //return "success";
         return "registrationsuccess";
     }
 

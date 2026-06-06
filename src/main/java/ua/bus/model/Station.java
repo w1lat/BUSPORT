@@ -1,16 +1,17 @@
 package ua.bus.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.persistence.Column;
+import jakarta.persistence.Table;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-@Entity
+@Data
 @Table(name = "stations")
+@SuperBuilder
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString(callSuper = true)
 public class Station extends GeneratedIdentifierEntity {
 
     @Column(length = 3, nullable = false)
@@ -20,67 +21,5 @@ public class Station extends GeneratedIdentifierEntity {
 //    @OneToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "coordinates_id", referencedColumnName = "id")
 //    private Coordinates coordinates;
-
-    public Station() {
-    }
-
-    public Station(String stationCode, String stationName) {
-        this.stationCode = stationCode;
-        this.stationName = stationName;
-//        this.coordinates = coordinates;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Station station = (Station) o;
-
-        if (!stationCode.equals(station.stationCode)) return false;
-        return stationName.equals(station.stationName);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = stationCode != null ? stationCode.hashCode() : 0;
-        result = 31 * result + (stationName != null ? stationName.hashCode() : 0);
-//        result = 31 * result + (coordinates != null ? coordinates.hashCode() : 0);
-        return result;
-    }
-
-    public String getStationCode() {
-
-        return stationCode;
-    }
-
-    public void setStationCode(String stationCode) {
-        this.stationCode = stationCode;
-    }
-
-    public String getStationName() {
-        return stationName;
-    }
-
-    public void setStationName(String stationName) {
-        this.stationName = stationName;
-    }
-
-//    public Coordinates getCoordinates() {
-//        return coordinates;
-////    }
-//
-//    public void setCoordinates(Coordinates coordinates) {
-//        this.coordinates = coordinates;
-////    }
-//
-//    public List<Route> getRoutes() {
-//        return routes;
-//    }
-//
-//    public void setRoutes(List<Route> routes) {
-//        this.routes = routes;
-//    }
 }
 

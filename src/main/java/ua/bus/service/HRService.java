@@ -1,6 +1,7 @@
 package ua.bus.service;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.bus.dao.DriverRepository;
@@ -11,7 +12,7 @@ import ua.bus.utils.exceptions.EntitySaveException;
 @Service
 public class HRService {
 
-    private static Logger LOGGER = Logger.getLogger(HRService.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(HRService.class);
 
     @Autowired
     private DriverRepository driverRepository;
@@ -28,13 +29,8 @@ public class HRService {
 
     public Driver getDriverById(Long id) throws EntityNotFoundException {
         LOGGER.info("Starting driver getting by id " + id);
-        Driver gotDriver = driverRepository.findOne(id);
 
-        if (gotDriver == null) {
-            throw new EntityNotFoundException(id, Driver.class);
-        } else {
-            return gotDriver;
-        }
+        return driverRepository.findById(id).orElseThrow(()  -> new EntityNotFoundException(id, Driver.class));
     }
 
     public Driver updateDriver(Driver driver) throws EntitySaveException {
@@ -61,6 +57,6 @@ public class HRService {
 
     public void deleteDriver(Long id) {
         LOGGER.info("Starting driver deleting by id " + id);
-        driverRepository.delete(id);
+        driverRepository.deleteById(id);
     }
 }

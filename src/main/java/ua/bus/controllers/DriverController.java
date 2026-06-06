@@ -1,6 +1,7 @@
 package ua.bus.controllers;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,12 +14,12 @@ import ua.bus.service.HRService;
 import ua.bus.utils.exceptions.EntityNotFoundException;
 import ua.bus.utils.exceptions.EntitySaveException;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 @Controller
 public class DriverController {
 
-    private static final Logger LOGGER = Logger.getLogger(DriverController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DriverController.class);
 
     @Autowired
     private HRService hrService;

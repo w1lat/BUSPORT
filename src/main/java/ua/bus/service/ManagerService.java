@@ -1,6 +1,7 @@
 package ua.bus.service;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.bus.dao.BusRepository;
@@ -12,10 +13,12 @@ import ua.bus.model.Station;
 import ua.bus.utils.exceptions.EntityNotFoundException;
 import ua.bus.utils.exceptions.EntitySaveException;
 
+import java.util.Optional;
+
 @Service
 public class ManagerService {
 
-    private static Logger LOGGER = Logger.getLogger(ManagerService.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(ManagerService.class);
 
     @Autowired
     private RouteRepository routeRepository;
@@ -82,14 +85,8 @@ public class ManagerService {
 
     public Station getStationById(long id) throws EntityNotFoundException {
         LOGGER.info("Starting station getting by id");
-        Station station = stationRepository.findOne(id);
 
-        if (station == null) {
-            throw new EntityNotFoundException(id, Station.class);
-        } else {
-            return station;
-        }
-
+        return stationRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Station.class));
     }
 
     public Station updateStation(Station station) throws EntitySaveException {
@@ -105,18 +102,14 @@ public class ManagerService {
 
     public void deleteStation(long id) {
         LOGGER.info("Starting station delete");
-        stationRepository.delete(id);
+        stationRepository.deleteById(id);
     }
 
     public Bus getBusById(long id) throws EntityNotFoundException {
         LOGGER.info("Starting bus getting by id");
-        Bus bus = busRepository.findOne(id);
 
-        if (bus == null) {
-            throw new EntityNotFoundException(id, Bus.class);
-        } else {
-            return bus;
-        }
+        return busRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(id, Bus.class));
     }
 
     public Bus updateBus(Bus bus) throws EntitySaveException {
@@ -143,12 +136,12 @@ public class ManagerService {
 
     public void deleteBus(long id) {
         LOGGER.info("Starting bus delete");
-        busRepository.delete(id);
+        busRepository.deleteById(id);
     }
 
     public void deleteRoute(long id) {
         LOGGER.info("Starting route delete");
-        routeRepository.delete(id);
+        routeRepository.deleteById(id);
     }
 
     public Iterable<Route> getAllRoutes() throws EntityNotFoundException {
@@ -175,12 +168,6 @@ public class ManagerService {
 
     public Route getRouteById(long id) throws EntityNotFoundException {
         LOGGER.info("Starting route getting by id");
-        Route route = routeRepository.findOne(id);
-
-        if (route == null) {
-            throw new EntityNotFoundException(id, Route.class);
-        } else {
-            return route;
-        }
+        return routeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Route.class));
     }
 }

@@ -1,6 +1,8 @@
 package ua.bus.controllers;
 
-import org.apache.log4j.Logger;
+import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -8,15 +10,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import ua.bus.model.*;
 import ua.bus.service.HRService;
 import ua.bus.service.ManagerService;
 import ua.bus.utils.exceptions.EntityNotFoundException;
 import ua.bus.utils.exceptions.EntitySaveException;
 
-import javax.validation.Valid;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Vitalii on 28.10.2017.
@@ -24,7 +25,7 @@ import java.util.*;
 @Controller
 public class RouteController {
 
-    private static final Logger LOGGER = Logger.getLogger(RouteController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RouteController.class);
 
     @Autowired
     private ManagerService managerService;
@@ -37,6 +38,7 @@ public class RouteController {
         Iterable<Driver> drivers = null;
         Iterable<Station> stations = null;
         Iterable<Bus> buses = null;
+        List<WayPoint> wayPoints = null;
         try {
             drivers = hrService.getAllDrivers();
             stations = managerService.getAllStations();
@@ -45,25 +47,30 @@ public class RouteController {
         } catch (EntityNotFoundException e) {
             e.printStackTrace();
         }
-
+        wayPoints = new ArrayList<>();
+        for(Station station : stations){
+            WayPoint wayPoint = new WayPoint();
+            wayPoint.setStation(station);
+            wayPoints.add(wayPoint);
+        }
         model.addAttribute("route", route);
         model.addAttribute("driverList", drivers);
-        model.addAttribute("stationList", stations);
+        model.addAttribute("wayPointsList", wayPoints);
         model.addAttribute("busList", buses);
 
-        return "addRoute";
+        return "addRouteNew";
     }
 
     @RequestMapping(value = "/addRoute", method = RequestMethod.POST)
-    public String saveRoute(@Valid Route route, @RequestParam("wayPoints") WayPoint[] wayPoints, BindingResult result, ModelMap model){
+    public String saveRoute(@Valid Route route/*, @RequestParam("wayPoints") WayPoint[] wayPoints*/, BindingResult result, ModelMap model){
         System.out.println("Start route adding");
-        for(WayPoint point : wayPoints){
-            System.out.println(point);
-        }
+//        for(WayPoint point : wayPoints){
+//            System.out.println(point);
+//        }
         System.out.println();
         if(result.hasErrors()) {
             System.out.println(result.getAllErrors());
-            return "addRoute";
+            return "addRouteNew";
         }
         try{
             route.generateRouteCode();
@@ -99,7 +106,7 @@ public class RouteController {
         model.addAttribute("stationList", stations);
         model.addAttribute("busList", buses);
         model.addAttribute("edit", true);
-        return "addRoute";
+        return "addRouteNew";
     }
 
     @RequestMapping(value = {"/edit-route-{id}"}, method = RequestMethod.POST)
@@ -107,7 +114,7 @@ public class RouteController {
                                ModelMap model, @PathVariable String id) {
 
         if (result.hasErrors()) {
-            return "addRoute";
+            return "addRouteNew";
         }
         try {
             managerService.updateRoute(route);

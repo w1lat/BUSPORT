@@ -1,14 +1,22 @@
 package ua.bus.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by vitalii on 03.04.17.
  */
-@Entity
+@Data
 @Table(name = "routes")
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class Route extends GeneratedIdentifierEntity{
 
     private static int routeNumber;
@@ -31,39 +39,8 @@ public class Route extends GeneratedIdentifierEntity{
 //    @JoinTable(name = "route_waypoints",
 //            joinColumns = @JoinColumn(name = "route_id"),
 //            inverseJoinColumns = @JoinColumn(name = "waypoint_id"))
+    @Builder.Default
     private List<WayPoint> wayPoints = new ArrayList<>();
-
-    public String getRouteCode() {
-        return routeCode;
-    }
-
-    public void setRouteCode(String routeCode) {
-        this.routeCode = routeCode;
-    }
-
-    public Bus getBus() {
-        return bus;
-    }
-
-    public void setBus(Bus bus) {
-        this.bus = bus;
-    }
-
-    public Driver getDriver() {
-        return driver;
-    }
-
-    public void setDriver(Driver driver) {
-        this.driver = driver;
-    }
-
-    public List<WayPoint> getWayPoints() {
-        return wayPoints;
-    }
-
-    public void setWayPoints(List<WayPoint> wayPoints) {
-        this.wayPoints = wayPoints;
-    }
 
     public String generateRouteCode() {
         String departureStationCode = wayPoints.get(0).getStation().getStationCode();
@@ -72,9 +49,6 @@ public class Route extends GeneratedIdentifierEntity{
         String arrivalStationCode = wayPoints.get(countOfStations - 1).getStation().getStationCode();
         this.setRouteCode(routeNumber + departureStationCode + countOfStations + arrivalStationCode);
         return routeCode;
-    }
-
-    public Route() {
     }
 
     public Route(Bus bus, Driver driver/*, List<WayPoint> wayPoints*/) {

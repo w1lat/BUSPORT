@@ -8,8 +8,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>User Registration Form</title>
-    <link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"/>
-    <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"/>
+    <link href="<c:url value='../static/css/bootstrap.css' />" rel="stylesheet"/>
+    <link href="<c:url value='../static/css/app.css' />" rel="stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -79,7 +79,7 @@
             </div>
         </div>
 
-        <div class="col-md-7">
+        <div class="row">
             <div class="form-group col-md-12">
                 <label class="col-md-3 control-lable" for="arrival_station">Choose station of arriving</label>
 
@@ -93,7 +93,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-7">
+        <div class="row">
             <div class="form-group col-md-12">
                 <label class="col-md-3 control-lable" for="departure_station">Choose station of departure</label>
 
