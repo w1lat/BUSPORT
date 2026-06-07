@@ -33,6 +33,7 @@ public class DriverController {
 
     @RequestMapping(value = {"/addDriver"}, method = RequestMethod.POST)
     public String saveDriver(@Valid Driver driver, BindingResult result, ModelMap model) {
+        LOGGER.info("Saving driver " + driver.toString());
 
         if (result.hasErrors()) {
             return "addDriver";

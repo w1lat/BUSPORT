@@ -10,6 +10,7 @@ import java.time.LocalTime;
 /**
  * Created by vitalii on 03.04.17.
  */
+@Entity
 @Data
 @Table(name = "tickets")
 @SuperBuilder

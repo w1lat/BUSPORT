@@ -7,6 +7,7 @@ import lombok.experimental.SuperBuilder;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+@Entity
 @Data
 @Table(name = "waypoints")
 @SuperBuilder
@@ -16,8 +17,7 @@ import java.time.LocalTime;
 @ToString(callSuper = true)
 public class WayPoint extends GeneratedIdentifierEntity{
 
-    @OneToOne(cascade = {CascadeType.PERSIST,
-            CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "station_id", referencedColumnName = "id")
     private Station station;
     @Column(length = 10, nullable = true)
@@ -28,6 +28,7 @@ public class WayPoint extends GeneratedIdentifierEntity{
     private LocalTime timeOfDeparture;
     @Column(length = 10, nullable = true)
     private LocalTime timeOfArrival;
+    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "route_id", referencedColumnName = "id")
     private Route route;

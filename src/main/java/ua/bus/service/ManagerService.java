@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 import ua.bus.dao.BusRepository;
 import ua.bus.dao.RouteRepository;
 import ua.bus.dao.StationRepository;
+import ua.bus.dao.WayPointRepository;
 import ua.bus.model.Bus;
 import ua.bus.model.Route;
 import ua.bus.model.Station;
+import ua.bus.model.WayPoint;
 import ua.bus.utils.exceptions.EntityNotFoundException;
 import ua.bus.utils.exceptions.EntitySaveException;
-
-import java.util.Optional;
 
 @Service
 public class ManagerService {
@@ -26,6 +26,8 @@ public class ManagerService {
     private StationRepository stationRepository;
     @Autowired
     private BusRepository busRepository;
+    @Autowired
+    private WayPointRepository wayPointRepository;
 
 //    public Map<String, Route> getRouteByDepartureAndStation(LocalDate dateOfDeparture, String stationName) throws NoSuchRouteException {
 //        LOGGER.info("Starting find route procedure on " + dateOfDeparture + " and " + stationName + " station");
@@ -38,7 +40,7 @@ public class ManagerService {
 //    }
 
     public Route addRoute(Route route) throws EntitySaveException {
-        LOGGER.info("Starting new route adding");
+        LOGGER.info("Starting new route adding" + route.toString());
 
         route = routeRepository.save(route);
 
@@ -49,7 +51,7 @@ public class ManagerService {
     }
 
     public Bus addBus(Bus bus) throws EntitySaveException {
-        LOGGER.info("Starting new bus adding");
+        LOGGER.info("Starting new bus adding" + bus.toString());
 
         bus = busRepository.save(bus);
 
@@ -62,7 +64,7 @@ public class ManagerService {
     }
 
     public Station addStation(Station station) throws EntitySaveException {
-        LOGGER.info("Starting station adding " + station.getStationName());
+        LOGGER.info("Starting station adding " + station.toString());
 
         Station saved = stationRepository.save(station);
 
@@ -84,13 +86,13 @@ public class ManagerService {
     }
 
     public Station getStationById(long id) throws EntityNotFoundException {
-        LOGGER.info("Starting station getting by id");
+        LOGGER.info("Starting station getting by id" + id);
 
         return stationRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Station.class));
     }
 
     public Station updateStation(Station station) throws EntitySaveException {
-        LOGGER.info("Starting station update");
+        LOGGER.info("Starting station update" + station.toString());
         Station updatedStation = stationRepository.save(station);
 
         if (updatedStation == null) {
@@ -101,19 +103,19 @@ public class ManagerService {
     }
 
     public void deleteStation(long id) {
-        LOGGER.info("Starting station delete");
+        LOGGER.info("Starting station delete" + id);
         stationRepository.deleteById(id);
     }
 
     public Bus getBusById(long id) throws EntityNotFoundException {
-        LOGGER.info("Starting bus getting by id");
+        LOGGER.info("Starting bus getting by id" + id);
 
         return busRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(id, Bus.class));
     }
 
     public Bus updateBus(Bus bus) throws EntitySaveException {
-        LOGGER.info("Starting bus update");
+        LOGGER.info("Starting bus update" + bus.toString());
         Bus updatedBus = busRepository.save(bus);
 
         if (updatedBus == null) {
@@ -135,12 +137,12 @@ public class ManagerService {
     }
 
     public void deleteBus(long id) {
-        LOGGER.info("Starting bus delete");
+        LOGGER.info("Starting bus delete" + id);
         busRepository.deleteById(id);
     }
 
     public void deleteRoute(long id) {
-        LOGGER.info("Starting route delete");
+        LOGGER.info("Starting route delete" + id);
         routeRepository.deleteById(id);
     }
 
@@ -156,7 +158,7 @@ public class ManagerService {
     }
 
     public Route updateRoute(Route route) throws EntitySaveException {
-        LOGGER.info("Starting route update");
+        LOGGER.info("Starting route update" + route.toString());
         Route updatedRoute = routeRepository.save(route);
 
         if (updatedRoute == null) {
@@ -167,7 +169,12 @@ public class ManagerService {
     }
 
     public Route getRouteById(long id) throws EntityNotFoundException {
-        LOGGER.info("Starting route getting by id");
+        LOGGER.info("Starting route getting by id" + id);
         return routeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Route.class));
+    }
+
+    public WayPoint getWayPointById(long id) throws EntityNotFoundException {
+        LOGGER.info("Starting waypoint getting by id" + id);
+        return wayPointRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Route.class));
     }
 }

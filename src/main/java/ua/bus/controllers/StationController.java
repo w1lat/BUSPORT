@@ -107,6 +107,4 @@ public class StationController {
         managerService.deleteStation(id);
         return "redirect:/allStations";
     }
-
-
 }

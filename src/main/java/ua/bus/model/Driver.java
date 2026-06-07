@@ -1,15 +1,18 @@
 package ua.bus.model;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
 /**
  * Created by vitalii on 03.04.17.
  */
+@Entity
 @Data
 @Table(name = "drivers")
 @SuperBuilder
@@ -30,6 +33,7 @@ public class Driver extends GeneratedIdentifierEntity{
 //    @JoinColumn(name = "license_id", referencedColumnName = "id")
 //    private DrivingLicense drivingLicense;
     @Column(length = 10, nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDay;
     private int expirience;
 }

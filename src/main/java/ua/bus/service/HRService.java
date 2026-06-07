@@ -18,7 +18,7 @@ public class HRService {
     private DriverRepository driverRepository;
 
     public Driver addDriver(Driver driver) throws EntitySaveException {
-        LOGGER.info("Starting driver adding " + driver.getName() + " " + driver.getSurName());
+        LOGGER.info("Starting driver adding " + driver.toString());
         Driver saved = driverRepository.save(driver);
 
         if (saved == null) {
@@ -34,7 +34,7 @@ public class HRService {
     }
 
     public Driver updateDriver(Driver driver) throws EntitySaveException {
-        LOGGER.info("Starting driver updating " + driver.getName() + " " + driver.getSurName());
+        LOGGER.info("Starting driver updating " + driver.toString());
         Driver updatedDriver = driverRepository.save(driver);
 
         if (updatedDriver == null) {

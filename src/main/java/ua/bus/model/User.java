@@ -10,6 +10,7 @@ import java.util.Set;
 /**
  * Created by vitalii on 03.04.17.
  */
+@Entity
 @Data
 @Table(name = "users")
 @SuperBuilder
