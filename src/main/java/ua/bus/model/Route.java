@@ -1,69 +1,46 @@
 package ua.bus.model;
 
-import javax.persistence.*;
-import java.util.ArrayList;
+import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Created by vitalii on 03.04.17.
  */
 @Entity
+@Data
 @Table(name = "routes")
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class Route extends GeneratedIdentifierEntity{
 
     private static int routeNumber;
     @Column(name = "route_code", nullable = false, unique = true)
     private String routeCode;
-    @OneToOne(cascade = {CascadeType.PERSIST,
-            CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "bus_id", referencedColumnName = "id")
     private Bus bus;
-    @OneToOne(cascade = {CascadeType.PERSIST,
-            CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "driver_id", referencedColumnName = "id")
     private Driver driver;
 
-//    @OneToMany(cascade = {CascadeType.PERSIST,
+//        @OneToMany(cascade = {CascadeType.PERSIST,
 //            CascadeType.MERGE})
     @OneToMany(mappedBy = "route",
             cascade = {CascadeType.ALL},
-            fetch = FetchType.LAZY)
+            fetch = FetchType.LAZY,
+            orphanRemoval = true)
 //    @JoinTable(name = "route_waypoints",
 //            joinColumns = @JoinColumn(name = "route_id"),
 //            inverseJoinColumns = @JoinColumn(name = "waypoint_id"))
-    private List<WayPoint> wayPoints = new ArrayList<>();
-
-    public String getRouteCode() {
-        return routeCode;
-    }
-
-    public void setRouteCode(String routeCode) {
-        this.routeCode = routeCode;
-    }
-
-    public Bus getBus() {
-        return bus;
-    }
-
-    public void setBus(Bus bus) {
-        this.bus = bus;
-    }
-
-    public Driver getDriver() {
-        return driver;
-    }
-
-    public void setDriver(Driver driver) {
-        this.driver = driver;
-    }
-
-    public List<WayPoint> getWayPoints() {
-        return wayPoints;
-    }
-
-    public void setWayPoints(List<WayPoint> wayPoints) {
-        this.wayPoints = wayPoints;
-    }
+    @Builder.Default
+    private List<WayPoint> wayPoints = new LinkedList<>();
 
     public String generateRouteCode() {
         String departureStationCode = wayPoints.get(0).getStation().getStationCode();
@@ -74,14 +51,16 @@ public class Route extends GeneratedIdentifierEntity{
         return routeCode;
     }
 
-    public Route() {
-    }
-
     public Route(Bus bus, Driver driver/*, List<WayPoint> wayPoints*/) {
         this.bus = bus;
         this.driver = driver;
         /*this.wayPoints = wayPoints;*/
         generateRouteCode();
+    }
+
+    public void addWayPointToTheEndOfRoute(WayPoint wayPoint) {
+        wayPoint.setRoute(this);
+        this.wayPoints.add(wayPoint);
     }
 }
 

@@ -7,8 +7,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>User Registration Form</title>
-    <link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
-    <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
+    <link href="<c:url value='../../static/css/bootstrap.css' />" rel="stylesheet"></link>
+    <link href="<c:url value='../../static/css/app.css' />" rel="stylesheet"></link>
 </head>
 
 <body>
@@ -33,7 +33,8 @@
                 <label class="col-md-3 control-lable" for="stationCode">Station Code</label>
 
                 <div class="col-md-7">
-                    <form:input type="text" path="stationCode" id="stationCode" maxlength="3" class="form-control input-sm"/>
+                    <form:input type="text" path="stationCode" id="stationCode" maxlength="3"
+                                class="form-control input-sm"/>
                     <div class="has-error">
                         <form:errors path="stationCode" class="help-inline"/>
                     </div>
@@ -54,85 +55,33 @@
             </div>
         </div>
 
-    <%--<form:form method="POST" modelAttribute="coordinates" class="form-horizontal">--%>
+        <%--<form:form method="POST" modelAttribute="coordinates" class="form-horizontal">--%>
         <%--<div class="row">--%>
-            <%--<div class="form-group col-md-12">--%>
-                <%--<label class="col-md-3 control-lable" for="latitude">Station Latitude</label>--%>
+        <%--<div class="form-group col-md-12">--%>
+        <%--<label class="col-md-3 control-lable" for="latitude">Station Latitude</label>--%>
 
-                <%--<div class="col-md-7">--%>
-                    <%--<form:input type="number" path="latitude" id="latitude" class="form-control input-sm"/>--%>
-                    <%--<div class="has-error">--%>
-                        <%--<form:errors path="latitude" class="help-inline"/>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-            <%--</div>--%>
+        <%--<div class="col-md-7">--%>
+        <%--<form:input type="number" path="latitude" id="latitude" class="form-control input-sm"/>--%>
+        <%--<div class="has-error">--%>
+        <%--<form:errors path="latitude" class="help-inline"/>--%>
+        <%--</div>--%>
+        <%--</div>--%>
+        <%--</div>--%>
         <%--</div>--%>
 
         <%--<div class="row">--%>
-            <%--<div class="form-group col-md-12">--%>
-                <%--<label class="col-md-3 control-lable" for="longditude">Station Longditude</label>--%>
+        <%--<div class="form-group col-md-12">--%>
+        <%--<label class="col-md-3 control-lable" for="longditude">Station Longditude</label>--%>
 
-                <%--<div class="col-md-7">--%>
-                    <%--<form:input type="number" path="longditude" id="longditude" class="form-control input-sm"/>--%>
-                    <%--<div class="has-error">--%>
-                        <%--<form:errors path="longditude" class="help-inline"/>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-            <%--</div>--%>
+        <%--<div class="col-md-7">--%>
+        <%--<form:input type="number" path="longditude" id="longditude" class="form-control input-sm"/>--%>
+        <%--<div class="has-error">--%>
+        <%--<form:errors path="longditude" class="help-inline"/>--%>
         <%--</div>--%>
-    <%--</form:form>--%>
-
-        <%--<div class="row">--%>
-            <%--<div class="form-group col-md-12">--%>
-                <%--<label class="col-md-3 control-lable" for="dateOfDeparture">Date of Departure</label>--%>
-
-                <%--<div class="col-md-7">--%>
-                    <%--<form:input type="date" path="dateOfDeparture" id="dateOfDeparture" class="form-control input-sm"/>--%>
-                    <%--<div class="has-error">--%>
-                        <%--<form:errors path="dateOfDeparture" class="help-inline"/>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-            <%--</div>--%>
         <%--</div>--%>
-
-        <%--<div class="row">--%>
-            <%--<div class="form-group col-md-12">--%>
-                <%--<label class="col-md-3 control-lable" for="dateOfArrival">Date of Arrival</label>--%>
-
-                <%--<div class="col-md-7">--%>
-                    <%--<form:input type="date" path="dateOfArrival" id="dateOfArrival" class="form-control input-sm"/>--%>
-                    <%--<div class="has-error">--%>
-                        <%--<form:errors path="dateOfArrival" class="help-inline"/>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-            <%--</div>--%>
         <%--</div>--%>
-
-        <%--<div class="row">--%>
-            <%--<div class="form-group col-md-12">--%>
-                <%--<label class="col-md-3 control-lable" for="timeOfDeparture">Time of Departure</label>--%>
-
-                <%--<div class="col-md-7">--%>
-                    <%--<form:input type="time" path="timeOfDeparture" id="timeOfDeparture" class="form-control input-sm"/>--%>
-                    <%--<div class="has-error">--%>
-                        <%--<form:errors path="timeOfDeparture" class="help-inline"/>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-            <%--</div>--%>
         <%--</div>--%>
-
-        <%--<div class="row">--%>
-            <%--<div class="form-group col-md-12">--%>
-                <%--<label class="col-md-3 control-lable" for="timeOfArrival">Time of Arrival</label>--%>
-
-                <%--<div class="col-md-7">--%>
-                    <%--<form:input type="time" path="timeOfArrival" id="timeOfArrival" class="form-control input-sm"/>--%>
-                    <%--<div class="has-error">--%>
-                        <%--<form:errors path="timeOfArrival" class="help-inline"/>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-            <%--</div>--%>
-        <%--</div>--%>
+        <%--</form:form>--%>
 
         <div class="row">
             <div class="form-actions floatRight">
