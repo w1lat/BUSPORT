@@ -3,6 +3,7 @@ package ua.bus.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import ua.bus.dao.BusRepository;
 import ua.bus.dao.RouteRepository;
@@ -18,7 +19,7 @@ import ua.bus.utils.exceptions.EntitySaveException;
 @Service
 public class ManagerService {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(ManagerService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ManagerService.class);
 
     @Autowired
     private RouteRepository routeRepository;
@@ -39,49 +40,62 @@ public class ManagerService {
 //        }
 //    }
 
-    public Route addRoute(Route route) throws EntitySaveException {
+    public Route addNewRoute(Route route) throws EntitySaveException {
         LOGGER.info("Starting new route adding" + route.toString());
 
-        route = routeRepository.save(route);
+        // Ensure bidirectional relationship is set
+        for (WayPoint wayPoint : route.getWayPoints()) {
+            wayPoint.setRoute(route);
+        }
 
-        if (route == null) {
+        Station departureStation = route.getWayPoints().getFirst().getStation();
+        if(departureStation.getStationCode() == null) {
+            departureStation = stationRepository.findById(departureStation.getId()).orElseThrow(() -> new IllegalArgumentException("Departure Station not found"));
+        }
+
+        Station arrivalStation = route.getWayPoints().getLast().getStation();
+        if(arrivalStation.getStationCode() == null) {
+            arrivalStation = stationRepository.findById(arrivalStation.getId()).orElseThrow(() -> new IllegalArgumentException("Arrival Station not found"));
+        }
+
+        route.generateRouteCode(departureStation.getStationCode(), arrivalStation.getStationCode());
+
+        try {
+            return routeRepository.save(route);
+        } catch (DataAccessException e) {
             throw new EntitySaveException(Route.class);
-        } else return route;
-
-    }
-
-    public Bus addBus(Bus bus) throws EntitySaveException {
-        LOGGER.info("Starting new bus adding" + bus.toString());
-
-        bus = busRepository.save(bus);
-
-        if (bus == null) {
-            throw new EntitySaveException(Bus.class);
-        } else {
-            return bus;
         }
 
     }
 
-    public Station addStation(Station station) throws EntitySaveException {
+    public Bus addNewBus(Bus bus) throws EntitySaveException {
+        LOGGER.info("Starting new bus adding" + bus.toString());
+
+        try {
+            return busRepository.save(bus);
+        } catch (DataAccessException e) {
+            throw new EntitySaveException(Bus.class);
+        }
+
+    }
+
+    public Station addNewStation(Station station) throws EntitySaveException {
         LOGGER.info("Starting station adding " + station.toString());
 
-        Station saved = stationRepository.save(station);
-
-        if (saved == null) {
+        try {
+            return stationRepository.save(station);
+        } catch (DataAccessException e){
             throw new EntitySaveException(Station.class);
-        } else return saved;
+        }
 
     }
 
     public Iterable<Station> getAllStations() throws EntityNotFoundException {
         LOGGER.info("Starting all stations getting");
-        Iterable stations = stationRepository.findAll();
-
-        if (stations == null) {
+        try {
+            return  stationRepository.findAll();
+        }catch (DataAccessException e){
             throw new EntityNotFoundException(0, Station.class); //0 means all stations
-        } else {
-            return stations;
         }
     }
 
@@ -93,12 +107,11 @@ public class ManagerService {
 
     public Station updateStation(Station station) throws EntitySaveException {
         LOGGER.info("Starting station update" + station.toString());
-        Station updatedStation = stationRepository.save(station);
 
-        if (updatedStation == null) {
+        try {
+            return stationRepository.save(station);
+        }catch (DataAccessException e){
             throw new EntitySaveException(Station.class);
-        } else {
-            return updatedStation;
         }
     }
 
@@ -116,23 +129,21 @@ public class ManagerService {
 
     public Bus updateBus(Bus bus) throws EntitySaveException {
         LOGGER.info("Starting bus update" + bus.toString());
-        Bus updatedBus = busRepository.save(bus);
 
-        if (updatedBus == null) {
+        try {
+            return busRepository.save(bus);
+        }catch (DataAccessException e){
             throw new EntitySaveException(Bus.class);
-        } else {
-            return updatedBus;
         }
     }
 
     public Iterable<Bus> getAllBuses() throws EntityNotFoundException {
         LOGGER.info("Starting all buses getting");
-        Iterable buses = busRepository.findAll();
 
-        if (buses == null) {
+        try {
+            return busRepository.findAll();
+        }catch (DataAccessException e){
             throw new EntityNotFoundException(0, Bus.class); //0 means all busses
-        } else {
-            return buses;
         }
     }
 
@@ -148,23 +159,21 @@ public class ManagerService {
 
     public Iterable<Route> getAllRoutes() throws EntityNotFoundException {
         LOGGER.info("Starting all routes getting");
-        Iterable routes = routeRepository.findAll();
 
-        if (routes == null) {
+        try {
+            return routeRepository.findAll();
+        }catch (DataAccessException e){
             throw new EntityNotFoundException(0, Route.class); //0 means all routes
-        } else {
-            return routes;
         }
     }
 
     public Route updateRoute(Route route) throws EntitySaveException {
         LOGGER.info("Starting route update" + route.toString());
-        Route updatedRoute = routeRepository.save(route);
 
-        if (updatedRoute == null) {
+        try {
+            return routeRepository.save(route);
+        } catch (DataAccessException e){
             throw new EntitySaveException(Route.class);
-        } else {
-            return updatedRoute;
         }
     }
 

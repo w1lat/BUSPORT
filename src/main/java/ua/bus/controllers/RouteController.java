@@ -10,7 +10,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import ua.bus.model.*;
 import ua.bus.service.HRService;
 import ua.bus.service.ManagerService;
@@ -54,27 +53,18 @@ public class RouteController {
     }
 
     @RequestMapping(value = "/addRoute", method = RequestMethod.POST)
-    public String saveRoute(@RequestParam Long departureStationId,
-                            @RequestParam Long arrivalStationId,
-                            @Valid Route route,
+    public String saveRoute(@Valid Route route,
                             BindingResult result,
                             ModelMap model) {
         LOGGER.info("Start route adding");
-        System.out.println();
         if (result.hasErrors()) {
             System.out.println(result.getAllErrors());
             return "addRoute";
         }
         try {
-            Station departureStation = managerService.getStationById(departureStationId);
-            Station arrivalStation = managerService.getStationById(arrivalStationId);
-            route.addWayPointToTheEndOfRoute(WayPoint.builder().station(departureStation).build());
-            route.addWayPointToTheEndOfRoute(WayPoint.builder().station(arrivalStation).build());
-            route.generateRouteCode();
-            managerService.addRoute(route);
+            managerService.addNewRoute(route);
+
             LOGGER.info("End route adding");
-        } catch (EntityNotFoundException e) {
-            LOGGER.error(e.getMessage());
         } catch (EntitySaveException e) {
             LOGGER.error(e.getMessage());
         }
@@ -108,9 +98,7 @@ public class RouteController {
     }
 
     @RequestMapping(value = {"/edit-route-{id}"}, method = RequestMethod.POST)
-    public String updateRoute(@RequestParam Long departureStationId,
-                              @RequestParam Long arrivalStationId,
-                              @Valid Route route,
+    public String updateRoute(@Valid Route route,
                               BindingResult result,
                               ModelMap model,
                               @PathVariable String id) {
@@ -119,14 +107,12 @@ public class RouteController {
             return "addRoute";
         }
         try {
-            Station departureStation = managerService.getStationById(departureStationId);
-            Station arrivalStation = managerService.getStationById(arrivalStationId);
-            route.addWayPointToTheEndOfRoute(WayPoint.builder().station(departureStation).build());
-            route.addWayPointToTheEndOfRoute(WayPoint.builder().station(arrivalStation).build());
+            for (WayPoint wp : route.getWayPoints()) {
+                wp.setRoute(route);
+            }
+
             managerService.updateRoute(route);
 
-        } catch (EntityNotFoundException e) {
-            LOGGER.error(e.getMessage());
         } catch (EntitySaveException e) {
             LOGGER.error(e.getMessage());
         }

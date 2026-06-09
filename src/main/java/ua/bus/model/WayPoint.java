@@ -17,7 +17,7 @@ import java.time.LocalTime;
 @ToString(callSuper = true)
 public class WayPoint extends GeneratedIdentifierEntity{
 
-    @ManyToOne(cascade = {CascadeType.MERGE})
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "station_id", referencedColumnName = "id")
     private Station station;
     @Column(length = 10, nullable = true)
@@ -28,8 +28,10 @@ public class WayPoint extends GeneratedIdentifierEntity{
     private LocalTime timeOfDeparture;
     @Column(length = 10, nullable = true)
     private LocalTime timeOfArrival;
+    @Column(nullable = false)
+    private int position;
     @ToString.Exclude
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "route_id", referencedColumnName = "id")
     private Route route;
 
