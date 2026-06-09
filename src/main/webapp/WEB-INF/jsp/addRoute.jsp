@@ -10,7 +10,7 @@
     <title>User Registration Form</title>
     <link href="<c:url value='../../static/css/bootstrap.css' />" rel="stylesheet"/>
     <link href="<c:url value='../../static/css/app.css' />" rel="stylesheet"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.7/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
             $("#add-btn").on("click", function () {
@@ -18,6 +18,60 @@
             })
         })
     </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#addStationBtn").on("click", function () {
+                const optionsHtml = $("#wayPointsContainer select:first").html();
+
+                const newRow =
+                    '<div class="row mt-2 waypoint-row">' +
+                    '<div class="form-group col-md-12">' +
+                    '<label class="col-md-3 control-lable">Intermediate station</label>' +
+                    '<div class="col-md-7">' +
+                    '<select class="form-control">' +
+                    optionsHtml +
+                    '</select>' +
+                    '</div>' +
+                    '<div class="col-md-2">' +
+                    '<button type="button" class="btn btn-danger btn-sm removeStationBtn">? Remove</button>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+
+                // Insert before the last row (arrival)
+                $("#wayPointsContainer .waypoint-row:last").before(newRow);
+                reindexWayPoints();
+            });
+
+            $(document).on("click", ".removeStationBtn", function () {
+                $(this).closest(".waypoint-row").remove();
+                reindexWayPoints();
+            });
+
+            function reindexWayPoints() {
+                $("#wayPointsContainer .waypoint-row").each(function (index) {
+                    const label = $(this).find("label");
+                    const select = $(this).find("select");
+
+                    if (index === 0) {
+                        label.text("Departure station");
+                    } else if (index === $("#wayPointsContainer .waypoint-row").length - 1) {
+                        label.text("Arrival station");
+                    } else {
+                        label.text("Intermediate station " + index);
+                    }
+
+                    select.attr("name", "wayPoints[" + index + "].station.id");
+                });
+            }
+
+            reindexWayPoints();
+        });
+    </script>
+
+
+
 </head>
 
 <body>
@@ -38,12 +92,12 @@
 
     <div class="row">
         <div class="form-group col-md-12">
-            <label class="col-md-3 control-lable" for="driverList">Route Code</label>
+            <label class="col-md-3 control-lable" for="routeCode">Route Code</label>
 
             <div class="col-md-7">
                 <c:choose>
                     <c:when test="${edit}">
-                        <form:input path="routeCode" id="routeCode" class="form-control input-sm"/>
+                        <form:input path="routeCode" id="routeCode" class="form-control input-sm" readonly="true"/>
                     </c:when>
                 </c:choose>
             </div>
@@ -91,48 +145,70 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="departure_station">Choose station of departure</label>
-
-                <div class="col-md-7">
-                    <select name="departureStationId" id="departure_station">
-                        <c:choose>
-                            <c:when test="${not empty stationsList}">
-                                <c:forEach items="${stationsList}" var="station">
-                                    <option value="${station.id}" ${station.id == route.wayPoints[0].station.id ? 'selected="selected"' : ''}>
-                                            ${station.stationCode} ${station.stationName}
-                                    </option>
-                                </c:forEach>
-                            </c:when>
-                            <c:otherwise>
-                                <option disabled="disabled">No stations available</option>
-                            </c:otherwise>
-                        </c:choose>
-                    </select>
+        <div id="wayPointsContainer">
+            <!-- Departure -->
+            <div class="row mt-2 waypoint-row">
+                <div class="form-group col-md-12">
+                    <label class="col-md-3 control-lable">Departure station</label>
+                    <div class="col-md-7">
+                        <select name="wayPoints[0].station" id="departure_station" class="form-control">
+                            <c:forEach items="${stationsList}" var="station">
+                                <option value="${station.id}"
+                                        <c:if test="${not empty route.wayPoints and station.id == route.wayPoints[0].station.id}">
+                                            selected="selected"
+                                        </c:if>>
+                                        ${station.stationCode} ${station.stationName}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" id="addStationBtn" class="btn btn-sm btn-primary">+ Station</button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="arrival_station">Choose station of arriving</label>
+            <!-- Intermediate stations (only if exist) -->
+            <c:if test="${fn:length(route.wayPoints) > 2}">
+                <c:forEach var="wp" items="${route.wayPoints}" begin="1" end="${fn:length(route.wayPoints)-2}" varStatus="status">
+                    <div class="row mt-2 waypoint-row">
+                        <div class="form-group col-md-12">
+                            <label class="col-md-3 control-lable">Intermediate station ${status.index}</label>
+                            <div class="col-md-7">
+                                <select name="wayPoints[${status.index}].station" class="form-control">
+                                    <c:forEach items="${stationsList}" var="station">
+                                        <option value="${station.id}"
+                                                <c:if test="${station.id == wp.station.id}">selected="selected"</c:if>>
+                                                ${station.stationCode} ${station.stationName}
+                                        </option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-danger btn-sm removeStationBtn">? Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </c:if>
 
-                <div class="col-md-7">
-                    <select name="arrivalStationId" id="arrival_station">
-                        <c:choose>
-                            <c:when test="${not empty stationsList}">
-                                <c:forEach items="${stationsList}" var="station">
-                                    <option value="${station.id}" ${station.id == route.wayPoints[fn:length(route.wayPoints)-1].station.id ? 'selected="selected"' : ''}>
-                                            ${station.stationCode} ${station.stationName}
-                                    </option>
-                                </c:forEach>
-                            </c:when>
-                            <c:otherwise>
-                                <option disabled="disabled">No stations available</option>
-                            </c:otherwise>
-                        </c:choose>
-                    </select>
+            <!-- Arrival -->
+            <div class="row mt-2 waypoint-row">
+                <div class="form-group col-md-12">
+                    <label class="col-md-3 control-lable">Arrival station</label>
+                    <div class="col-md-7">
+                        <select name="wayPoints[${fn:length(route.wayPoints) > 0 ? fn:length(route.wayPoints)-1 : 1}].station"
+                                id="arrival_station" class="form-control">
+                            <c:forEach items="${stationsList}" var="station">
+                                <option value="${station.id}"
+                                        <c:if test="${fn:length(route.wayPoints) > 1 and station.id == route.wayPoints[fn:length(route.wayPoints)-1].station.id}">
+                                            selected="selected"
+                                        </c:if>>
+                                        ${station.stationCode} ${station.stationName}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>

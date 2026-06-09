@@ -27,7 +27,7 @@ public class RoutesControllerTest extends InitAppContextTestBase {
                 .driver(driver)
                 .wayPoints(wayPoints)
                 .build();
-        route.generateRouteCode();
+        route.generateRouteCode(wayPoint1.getStation().getStationCode(), wayPoint2.getStation().getStationCode());
 
         LOGGER.info(route.getBus().toString());
         LOGGER.info(route.getDriver().toString());

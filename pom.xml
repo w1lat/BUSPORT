@@ -22,7 +22,7 @@
         <h2.version>1.4.193</h2.version>
         <lombok.version>1.18.46</lombok.version>
         <ecj.version>4.6.1</ecj.version>
-        <bootstrap.version>3.3.7</bootstrap.version>
+        <bootstrap.version>3.4.1</bootstrap.version>
         <junit-jupiter.version>5.10.2</junit-jupiter.version>
     </properties>
 
